@@ -13,18 +13,10 @@ import (
 
 func UserHandlerGetAll(ctx *fiber.Ctx) error {
 	var users []entity.User
-
-	//userInfo := ctx.Locals("userInfo").(jwt.MapClaims)
-	//log.Println("email :: ", userInfo["email"])
-
 	result := database.DB.Debug().Find(&users)
 	if result.Error != nil {
 		log.Println(result.Error)
 	}
-	//err := database.DB.Find(&users).Error
-	//if err != nil {
-	//	log.Println(err)
-	//}
 	return ctx.JSON(users)
 }
 
@@ -34,7 +26,7 @@ func UserHandlerCreate(ctx *fiber.Ctx) error {
 		return err
 	}
 
-	// VALIDASI REQUEST
+	// VALIDATE REQUEST
 	validate := validator.New()
 	errValidate := validate.Struct(user)
 	if errValidate != nil {
@@ -84,16 +76,6 @@ func UserHandlerGetById(ctx *fiber.Ctx) error {
 			"message": "user not found",
 		})
 	}
-
-	//userResponse := response.UserResponse{
-	//	ID:        user.ID,
-	//	Name:      user.Name,
-	//	Email:     user.Email,
-	//	Address:   user.Address,
-	//	Phone:     user.Phone,
-	//	CreatedAt: user.CreatedAt,
-	//	UpdatedAt: user.UpdatedAt,
-	//}
 
 	return ctx.JSON(fiber.Map{
 		"message": "success",

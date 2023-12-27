@@ -30,7 +30,5 @@ func Auth(ctx *fiber.Ctx) error {
 		})
 	}
 
-	// ctx.Locals("userInfo", claims)
-
 	return ctx.Next()
 }
